@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfolio BTS SIO — Bouziani Meldine</title>
+    <meta name="description" content="Portfolio BTS SIO en onglets avec barre latérale : Profil, BTS SIO, Parcours, Stages, Réalisations, Épreuves, Veille, Certifications, Contact." />
+    <style>
+      /* ===== Theme (no libs) ===== */
+      :root {
+        --bg: #000000;
+        --bg-2: #040f07;
+        --surface: #0e200c;
+        --card: rgba(28, 58, 27, 0.06);
+        --border: rgba(255, 255, 255, .14);
+        --text: #f2f5ff;
+        --muted: #ffffff;
+        --primary: #2a5a30;
+        --primary-2: #375c2e;
+        --ok: #22c55e;
+        --warn: #f59e0b;
+        --err: #ef4444;
+        --shadow: 0 12px 30px rgba(0, 0, 0, .35);
+        --sidebar-w: 280px;
+        --radius: 16px;
+      }
+
+      * {
+        box-sizing: border-box
+      }
+
+      html {
+        scroll-behavior: smooth
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        color: var(--text);
+        background: radial-gradient(900px 500px at 100% -50%, rgba(34, 211, 238, .18), transparent 60%), radial-gradient(900px 500px at -20% 110%, rgba(59, 130, 246, .20), transparent 60%), linear-gradient(180deg, var(--bg), var(--bg-2));
+      }
+
+      /* ===== Layout ===== */
+      .app {
+        display: grid;
+        grid-template-columns: var(--sidebar-w) 1fr;
+        min-height: 100dvh
+      }
+
+      aside {
+        position: sticky;
+        top: 0;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        padding: 22px;
+        border-right: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(16, 112, 56, 0.92), rgba(0, 0, 0, 0.86));
+      }
+
+      main {
+        padding: 28px;
+      }
+
+      .container {
+        max-width: 1050px;
+        margin: 0 auto
+      }
+
+      /* ===== Sidebar ===== */
+      .brand {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        font-weight: 800;
+        letter-spacing: .2px
+      }
+
+      .brand small {
+        color: var(--muted);
+        font-weight: 500
+      }
+
+      .menu {
+        display: flex;
+        flex-direction: column;
+        gap: 6px
+      }
+
+      .link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        color: var(--text);
+        border: 1px solid transparent
+      }
+
+      .link .ico {
+        width: 18px;
+        display: inline-flex;
+        justify-content: center
+      }
+
+      .link:hover {
+        background: rgba(255, 255, 255, .06);
+        border-color: var(--border)
+      }
+
+      .link.active {
+        background: linear-gradient(90deg, rgba(246, 59, 206, 0.25), rgba(34, 211, 238, .15));
+        border-color: transparent;
+        box-shadow: inset 0 0 0 1px rgba(105, 16, 16, 0.08)
+      }
+
+      .hr {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--border), transparent);
+        margin: 10px 0
+      }
+
+      /* Mobile topbar */
+      .topbar {
+        display: none
+      }
+
+      @media (max-width: 860px) {
+        .app {
+          grid-template-columns: 1fr
+        }
+
+        aside {
+          position: fixed;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: min(88vw, 320px);
+          transform: translateX(-100%);
+          transition: transform .25s ease;
+          z-index: 50
+        }
+
+        aside.open {
+          transform: translateX(0)
+        }
+
+        .scrim {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, .35);
+          backdrop-filter: blur(2px);
+          display: none
+        }
+
+        .scrim.show {
+          display: block
+        }
+
+        .topbar {
+          display: flex;
+          position: sticky;
+          top: 0;
+          z-index: 40;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          padding: 14px 16px;
+          border-bottom: 1px solid var(--border);
+          background: linear-gradient(180deg, rgba(10, 17, 40, .92), rgba(10, 17, 40, .86))
+        }
+
+        .hamb {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 38px;
+          height: 38px;
+          border-radius: 10px;
+          border: 1px solid var(--border)
+        }
+
+        main {
+          padding: 18px
+        }
+      }
+
+      /* ===== Cards & content ===== */
+      h1,
+      h2,
+      h3 {
+        margin: 0 0 .5rem
+      }
+
+      h1 {
+        font-size: clamp(1.4rem, 1.1rem + 1.4vw, 2.2rem)
+      }
+
+      h2 {
+        font-size: clamp(1.2rem, 1rem + .9vw, 1.6rem)
+      }
+
+      p {
+        color: var(--muted);
+        line-height: 1.7
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px;
+        box-shadow: var(--shadow)
+      }
+
+      .grid {
+        display: grid;
+        gap: 14px
+      }
+
+      .g-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+
+      .g-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr))
+      }
+
+      @media (max-width: 900px) {
+
+        .g-2,
+        .g-3 {
+          grid-template-columns: 1fr
+        }
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: .35rem .55rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .06);
+        border: 1px solid var(--border);
+        font-size: .84rem
+      }
+
+      /* ===== Tabs (sections) ===== */
+      section.tab {
+        display: none;
+        animation: fade .18s ease
+      }
+
+      section.tab.active {
+        display: block
+      }
+
+      @keyframes fade {
+        from {
+          opacity: .6;
+          transform: translateY(4px)
+        }
+
+        to {
+          opacity: 1;
+          transform: none
+        }
+      }
+
+      /* Footer */
+      footer {
+        padding: 28px 0 50px;
+        color: var(--muted)
+      }
+
+      /* === Micro interactions & reveal === */
+      .card {
+        transition: transform .18s ease, box-shadow .18s ease
+      }
+
+      .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, .45)
+      }
+
+      .link {
+        transition: background .18s ease, transform .18s ease
+      }
+
+      .link:hover {
+        transform: translateX(2px)
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity .4s ease, transform .4s ease
+      }
+
+      .reveal.show {
+        opacity: 1;
+        transform: none
+      }
+
+      /* Layout tweaks */
+      .container {
+        min-height: calc(100dvh - 80px)
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app" id="app">
+      <!-- ===== Sidebar ===== -->
+      <aside id="sidebar">
+        <div class="brand">
+          <div style="display:flex; align-items:center; gap:10px">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="g" x1="0" y1="0" x2="24" y2="24">
+                  <stop stop-color="#3b82f6" />
+                  <stop offset="1" stop-color="#22d3ee" />
+                </linearGradient>
+              </defs>
+              <circle cx="12" cy="12" r="9" stroke="url(#g)" stroke-width="2" />
+              <path d="M8 12h8M12 8v8" stroke="url(#g)" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <div>
+              <div style="font-size:1rem; line-height:1.1">BOUZIANI</div>
+              <div style="font-size:1rem; line-height:1.1;">Meldine</div>
+              <small>Étudiant BTS SIO — Option SISR</small>
+            </div>
+          </div>
+        </div>
+        <div class="hr"></div>
+        <nav class="menu" id="menu">
+          <a class="link" data-tab-target="profil">
+            <span class="ico">👤</span> Profil </a>
+          <a class="link" data-tab-target="bts">
+            <span class="ico">🎓</span> BTS SIO </a>
+          <a class="link" data-tab-target="parcours">
+            <span class="ico">📖</span> Parcours </a>
+          <a class="link" data-tab-target="stages">
+            <span class="ico">💼</span> Stages </a>
+          <a class="link" data-tab-target="realisations">
+            <span class="ico">🛠️</span> Mes Réalisations </a>
+          <a class="link" data-tab-target="epreuves">
+            <span class="ico">📄</span> Épreuve E5 </a>
+          <a class="link" data-tab-target="epreuve-e6">
+            <span class="ico">🛡️</span> Épreuve E6 </a>
+          <a class="link" data-tab-target="veille">
+            <span class="ico">👁️</span> Veille </a>
+          <a class="link" data-tab-target="contact">
+            <span class="ico">✉️</span> Contact </a>
+        </nav>
+        <div style="margin-top:auto; font-size:.9rem; color:var(--muted)">© <span id="year"></span>
+        </div>
+      </aside>
+      <!-- ===== Mobile topbar ===== -->
+      <div class="topbar">
+        <button class="hamb" id="openNav">☰</button>
+        <strong>Portfolio BTS SIO</strong>
+        <span style="opacity:0">x</span>
+      </div>
+      <!-- ===== Main content (tabs) ===== -->
+      <main>
+        <div class="container">
+       <!-- PROFIL -->
+<section id="profil" class="tab active">
+  <h1>Profil</h1>
+
+  <!-- GROS BLOC PROFIL -->
+  <div class="card" style="margin-top:16px; padding:0; overflow:hidden">
+
+    <!-- HERO PHOTO -->
+    <div style="position:relative; height:420px">
+      <img
+        src="Images/mb (2).png"
+        alt="Photo de Bouziani Meldine"
+        style="width:100%; height:100%; object-fit:cover"
+      />
+
+      <!-- Overlay -->
+      <div style="
+        position:absolute;
+        inset:0;
+        background:linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.75));
+      "></div>
+
+      <!-- TEXTE SUR PHOTO -->
+      <div style="
+        position:absolute;
+        inset:0;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        padding:20px;
+      ">
+        <h2 style="margin-bottom:8px">Bienvenue sur mon portfolio</h2>
+        <p style="max-width:720px; color:var(--muted)">
+          Je suis <strong>Bouziani Meldine</strong>, étudiant en <strong>BTS SIO SISR</strong><br>
+          Administration systèmes • Réseaux • Sécurité • Automatisation
+        </p>
+        <a href="#contact" class="btn" style="margin-top:14px"
+           onclick="showTab('contact'); return false;">
+          Me contacter
+        </a>
+      </div>
+    </div>
+
+    <!-- CONTENU -->
+    <div style="padding:28px">
+
+      <!-- A PROPOS -->
+      <h2>À propos de moi</h2>
+      <p>
+        Je m’appelle <strong>Bouziani Meldine</strong>, étudiant en
+        <strong>BTS SIO</strong> option <strong>SISR</strong>, au lycée Georges Brassens à
+        <strong>Rive-de-Gier</strong>.
+      </p>
+      <p>
+        Passionné par l’<strong>informatique</strong>, je m’intéresse
+        particulièrement aux <strong>systèmes</strong>, aux
+        <strong>réseaux</strong> et à la <strong>sécurité des infrastructures</strong>.
+      </p>
+   
+
+      <hr style="margin:32px 0; border:none; height:1px;
+        background:linear-gradient(90deg, transparent, var(--border), transparent);">
+
+      <!-- PROFIL PROFESSIONNEL -->
+      <h2>Profil professionnel</h2>
+      <p>
+        Étudiant en <strong>BTS SIO option SISR</strong>, je me spécialise dans
+        l’<strong>administration des systèmes</strong>, la
+        <strong>gestion des infrastructures réseaux</strong> et la
+        <strong>sécurisation des environnements informatiques</strong>.
+      </p>
+      <p>
+        Grâce à ma formation et à mes expériences en stage, j’ai développé
+        une approche <strong>méthodique</strong> et
+        <strong>orientée solutions</strong>, aussi bien en
+        <strong>support utilisateurs</strong> qu’en
+        <strong>intervention sur des services serveurs</strong>.
+      </p>
+  
+
+      <hr style="margin:32px 0; border:none; height:1px;
+        background:linear-gradient(90deg, transparent, var(--border), transparent);">
+
+      <!-- INFORMATIONS -->
+      <h3>Informations</h3>
+      <ul style="list-style:none; padding:0; line-height:1.9">
+        <li>📍 <strong>Localisation :</strong> Saint-Chamond</li>
+        <li>
+          ✉️ <strong>Email :</strong>
+          <a href="mailto:meldine.bouziani@gmail.com">meldine.bouziani@gmail.com</a>
+        </li>
+        <li>
+          🐙 <strong>GitHub :</strong>
+          <a href="https://github.com/mldnbzn" target="_blank" rel="noopener">
+            github.com/mldnbzn
+          </a>
+        </li>
+        <li>
+          💼 <strong>LinkedIn :</strong>
+          <a href="https://www.linkedin.com/in/meldine-bouziani-ba837b30b/"
+             target="_blank" rel="noopener">
+            Meldine Bouziani
+          </a>
+        </li>
+      </ul>
+
+      <!-- COMPETENCES -->
+      <div style="margin-top:24px">
+        <h3>Compétences techniques</h3>
+        <div style="display:flex; gap:8px; flex-wrap:wrap">
+          <span class="tag">Linux</span>
+          <span class="tag">Windows</span>
+          <span class="tag">Réseaux</span>
+          <span class="tag">Sécurité</span>
+          <span class="tag">Virtualisation</span>
+          <span class="tag">Bash</span>
+        </div>
+      </div>
+
+      <!-- SOFT SKILLS -->
+      <div style="margin-top:24px">
+        <h3>Soft skills</h3>
+        <div style="display:flex; gap:8px; flex-wrap:wrap">
+          <span class="tag">Rigueur</span>
+          <span class="tag">Autonomie</span>
+          <span class="tag">Travail d'équipe</span>
+          <span class="tag">Pédagogie</span>
+          <span class="tag">Curiosité</span>
+        </div>
+      </div>
+
+      <hr style="margin:32px 0; border:none; height:1px;
+        background:linear-gradient(90deg, transparent, var(--border), transparent);">
+
+      <!-- OBJECTIFS -->
+      <h2>Objectifs professionnels</h2>
+      <p>
+        Mon objectif à court terme est de poursuivre mes études en
+        <strong>Licence Professionnelle ESSIR</strong> afin d’approfondir
+        mes compétences en <strong>cybersécurité</strong>,
+        <strong>administration système</strong> et
+        <strong>réseaux</strong>.
+      </p>
+      <p>
+        À moyen terme, je souhaite évoluer vers un poste de
+        <strong>technicien systèmes et réseaux</strong>, puis vers des fonctions
+        à responsabilités dans le domaine de la
+        <strong>sécurité informatique</strong>.
+      </p>
+
+      <!-- CV -->
+      <div style="margin-top:30px">
+        <a href="Images/CV_MELDINEBOUZIANI.pdf.pdf"
+           target="_blank"
+           class="btn btn-primary">
+          📄 Télécharger mon CV
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+         <!-- BTS SIO -->
+<section id="bts" class="tab">
+  <h1>BTS SIO — Présentation générale</h1>
+
+  <!-- PRESENTATION GENERALE -->
+  <div class="grid g-2" style="margin-top:12px">
+    <div class="card">
+      <h2>Qu'est-ce que le BTS SIO ?</h2>
+
+      <p>
+        Le <strong>BTS Services Informatiques aux Organisations (SIO)</strong>
+        est une formation de niveau <strong>Bac +2</strong> orientée vers
+        les métiers de l'informatique en entreprise.
+      </p>
+
+      <p>
+        Il forme des techniciens capables de
+        <strong>déployer</strong>, <strong>maintenir</strong> et
+        <strong>sécuriser</strong> des services numériques
+        au sein des organisations.
+      </p>
+
+      <p>
+        Le BTS SIO propose deux spécialités :
+        <strong>SISR</strong> et <strong>SLAM</strong>.
+      </p>
+    </div>
+
+    <div class="card" style="padding:0; overflow:hidden">
+      <img src="Images/btssio.png"
+           alt="BTS SIO"
+           style="width:100%; height:320px; object-fit:cover; display:block" />
+    </div>
+  </div>
+
+  <!-- OPTIONS -->
+  <div class="grid g-2" style="margin-top:12px">
+
+    <!-- SISR -->
+    <div class="card">
+      <h2>Option SISR — Solutions d'Infrastructure, Systèmes et Réseaux</h2>
+
+      <p>
+        L'option <strong>SISR</strong> est orientée vers
+        <strong>l'administration et la sécurisation des infrastructures informatiques</strong>.
+      </p>
+
+      <ul>
+        <li>Administration de systèmes <strong>Windows</strong> et <strong>Linux</strong></li>
+        <li>Gestion des services réseau : AD, DNS, DHCP, VLAN</li>
+        <li>Virtualisation et supervision des infrastructures</li>
+        <li>Sécurisation des systèmes et des réseaux</li>
+      </ul>
+    </div>
+
+    <!-- SLAM -->
+    <div class="card">
+      <h2>Option SLAM — Solutions Logicielles et Applications Métiers</h2>
+
+      <p>
+        L'option <strong>SLAM</strong> est orientée vers le
+        <strong>développement d'applications</strong> et de solutions logicielles.
+      </p>
+
+      <ul>
+        <li>Développement d'applications web et logicielles</li>
+        <li>Gestion de bases de données (<strong>SQL</strong>)</li>
+        <li>Programmation front-end et back-end</li>
+        <li>Tests, documentation et bonnes pratiques de sécurité</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- CONCLUSION -->
+  <div class="card" style="margin-top:12px">
+    <h2>En résumé</h2>
+
+    <p>
+      <span class="tag">SISR → systèmes, réseaux, sécurité</span>
+      <span class="tag">SLAM → développement, applications, bases de données</span>
+    </p>
+
+    <p style="margin-top:10px">
+      J'ai choisi l'option <strong>SISR</strong> pour son orientation
+      technique et son lien direct avec l'administration
+      et la sécurisation des infrastructures informatiques.
+    </p>
+  </div>
+</section>
+          <!-- PARCOURS -->
+          <section id="parcours" class="tab">
+            <h1>Parcours</h1>
+            <div class="grid g-3" style="margin-top:12px">
+              <!-- BTS SIO -->
+              <div class="card" style="overflow:hidden">
+                <img src="Images/brassens.jpg" alt="Lycée Georges Brassens" style="width:100%; height:140px; object-fit:cover; display:block" />
+                <h3>2024 – 2025 (en cours)</h3>
+                <p>
+                  <strong>BTS SIO</strong> — Lycée Georges Brassens, Rive-de-Gier.
+                </p>
+                <ul>
+                  <li>Modules : systèmes, réseaux, cybersécurité, virtualisation, gestion de parc.</li>
+                  <li>Pratique : déploiement AD/DNS/DHCP, scripts Bash/Python, supervision de base.</li>
+                  <li>Travaux : mini-infra virtualisée + documentation d'exploitation.</li>
+                </ul>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px">
+                  <span class="tag">Linux</span>
+                  <span class="tag">Proxmox</span>
+                  <span class="tag">GLPI</span>
+                  <span class="tag">Bash</span>
+                  <span class="tag">VLAN</span>
+                </div>
+                <div style="margin-top:10px">
+                  <a class="btn" href="https://georges-brassens.ent.auvergnerhonealpes.fr/" target="_blank" rel="noopener">Lycée Georges Brassens 🔗</a>
+                </div>
+              </div>
+              <!-- Bac Pro MELEC -->
+              <div class="card" style="overflow:hidden">
+                <img src="Images/ismgg.jpg" alt="Bac Pro MELEC" style="width:100%; height:140px; object-fit:cover; display:block" />
+                <h3>2020 – 2024</h3>
+                <p>
+                  <strong>Bac Pro MELEC</strong> — Lycée Sainte-Marie-La Grande Grange, Saint-Chamond.
+                </p>
+                <ul>
+                  <li>Électricité, automatismes, lecture de schémas et sécurité.</li>
+                  <li>Maintenance préventive/curative, rigueur et méthode.</li>
+                  <li>Ouverture vers les systèmes connectés / Domotique.</li>
+                </ul>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px">
+                  <span class="tag">Automatisme</span>
+                  <span class="tag">Sécurité</span>
+                  <span class="tag">Méthodologie</span>
+                </div>
+                <div style="margin-top:10px">
+                  <a class="btn" href="https://ismgg.fr/" target="_blank" rel="noopener">Site de l'ISMGG 🔗</a>
+                </div>
+              </div>
+              <!-- Collège -->
+              <div class="card" style="overflow:hidden">
+                <img src="Images/college.JPG" alt="Collège Jean Rostand" style="width:100%; height:140px; object-fit:cover; display:block" />
+                <h3>2015 – 2019</h3>
+                <p>
+                  <strong>Collège</strong> — Collège Jean Rostand, Saint-Chamond.
+                </p>
+                <ul>
+                  <li>Culture générale, bases scientifiques et projets collectifs.</li>
+                  <li>Développement des soft skills : autonomie, organisation.</li>
+                </ul>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px">
+                  <span class="tag">Esprit d'équipe</span>
+                  <span class="tag">Curiosité</span>
+                  <span class="tag">Organisation</span>
+                </div>
+                <div style="margin-top:10px">
+                  <a class="btn" href="https://jean-rostand-loire.ent.auvergnerhonealpes.fr/" target="_blank" rel="noopener">Collège Jean Rostand 🔗</a>
+                </div>
+              </div>
+              <!-- Pleine largeur : Timeline -->
+              <div class="card" style="grid-column:1 / -1">
+                <h2>Timeline</h2>
+                <div style="position:relative; margin-top:12px; padding-left:24px">
+                  <div style="content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:linear-gradient(180deg, var(--border), transparent)"></div>
+                  <div style="position:relative; margin:14px 0; padding-left:20px">
+                    <span style="position:absolute; left:-2px; top:8px; width:10px; height:10px; border-radius:999px; background:var(--primary); box-shadow:0 0 0 3px rgba(59,130,246,.25)"></span>
+                    <strong>2024-...</strong> — <span style="color:var(--muted)">BTS Services informatiques aux organisations (Lycée Georges Brassens)</span>
+                  </div>
+                  <div style="position:relative; margin:14px 0; padding-left:20px">
+                    <span style="position:absolute; left:-2px; top:8px; width:10px; height:10px; border-radius:999px; background:var(--primary); box-shadow:0 0 0 3px rgba(59,130,246,.25)"></span>
+                    <strong>2021-2024</strong> — <span style="color:var(--muted)">Bac Pro MELEC (Lycée Sainte-Marie La Grande Grange)</span>
+                  </div>
+                  <div style="position:relative; margin:14px 0; padding-left:20px">
+                    <span style="position:absolute; left:-2px; top:8px; width:10px; height:10px; border-radius:999px; background:var(--primary); box-shadow:0 0 0 3px rgba(59,130,246,.25)"></span>
+                    <strong>2020-2021</strong> — <span style="color:var(--muted)">Bac Général (Lycée Sainte-Marie La Grande Grange)</span>
+                  </div>
+                  <div style="position:relative; margin:14px 0; padding-left:20px">
+                    <span style="position:absolute; left:-2px; top:8px; width:10px; height:10px; border-radius:999px; background:var(--primary); box-shadow:0 0 0 3px rgba(59,130,246,.25)"></span>
+                    <strong>2015-2019</strong> — <span style="color:var(--muted)">Fin du collège (Jean Rostand)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- STAGES -->
+          <section id="stages" class="tab">
+            <h1>Stages</h1>
+            <div class="card" style="margin-top:12px; overflow:hidden">
+              <!-- Bannière / Logo entreprise -->
+              <img src="Images/greta_logo.png" alt="Logo GRETA CFA Loire" style="width:100%; height:140px; object-fit:contain; background:rgba(255,255,255,0.08); display:block; padding:12px" />
+              <div class="grid g-2" style="padding-top:10px">
+                <div>
+                  <h2>Stage 1ère année</h2>
+                  <p>
+                    <em>GRETA CFA Loire — Saint-Étienne</em> · <span class="tag">Service Informatique</span>
+                  </p>
+                  <h3>Missions</h3>
+                  <ul>
+                    <li>Dépannage postes (logiciel/matériel), support utilisateurs.</li>
+                    <li>Accompagnement à la prise en main d'outils métiers.</li>
+                    <li>Mise à jour, inventaire de parc et petites automatisations.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>Compétences & Réalisations</h3>
+                  <p>
+                    <span class="tag">Windows</span>
+                    <span class="tag">Linux</span>
+                    <span class="tag">GLPI</span>
+                    <span class="tag">Bash</span>
+                  </p>
+                  <ul>
+                    <li>Réduction du temps de résolution sur incidents récurrents.</li>
+                    <li>Documentation d'astuces et procédures simples (PDF).</li>
+                  </ul>
+                  <div style="margin-top:14px">
+                    <a href="Images/attestation stage 1.pdf" target="_blank" title="Voir l'attestation de stage" style="display:inline-flex; align-items:center; gap:8px; padding:10px 16px; background:linear-gradient(90deg, var(--primary), var(--primary-2)); color:#fff; font-weight:600; border-radius:12px; text-decoration:none; box-shadow:0 4px 15px rgba(59,130,246,.4); transition:transform .2s ease, box-shadow .2s ease;"> 📄 Attestation (PDF) </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card" style="margin-top:12px; overflow:hidden">
+              <!-- Bannière / Logo entreprise -->
+              <img src="Images/xefi.png" alt="Logo XEFI"
+                   style="width:100%; height:140px; object-fit:contain;
+                          background:rgba(255,255,255,0.08);
+                          display:block; padding:12px" />
+            
+              <div class="grid g-2" style="padding-top:10px">
+            
+                <!-- GAUCHE -->
+                <div>
+                  <h2>Stage 2ème année</h2>
+                  <p>
+                    <em>XEFI — Saint-Étienne</em> ·
+                    <span class="tag">Service Technique</span>
+                  </p>
+            
+                  <h3>Missions</h3>
+                  <ul>
+                    <li>Configuration de <strong>pare-feu</strong> pour la sécurisation des réseaux clients.</li>
+                    <li>Configuration et mise en service de <strong>switchs</strong> (ports, VLAN).</li>
+                    <li>Installation et configuration de <strong>postes utilisateurs</strong> (Windows).</li>
+                    <li>Prise d'appels, <strong>création et gestion d'incidents</strong> via outil de ticketing.</li>
+                    <li><strong>Maintenance</strong> des imprimantes et des postes informatiques.</li>
+                  </ul>
+                </div>
+            
+                <!-- DROITE -->
+                <div>
+                  <h3>Compétences & Réalisations</h3>
+            
+                  <p>
+                    <span class="tag">Réseaux</span>
+                    <span class="tag">Pare-feu</span>
+                    <span class="tag">Switch</span>
+                    <span class="tag">Windows</span>
+                    <span class="tag">Support</span>
+                    <span class="tag">Ticketing</span>
+                  </p>
+            
+                  <ul>
+                    <li>Participation à la <strong>sécurisation d'infrastructures clients</strong>.</li>
+                    <li>Amélioration du <strong>support utilisateur</strong> et du suivi des incidents.</li>
+                  </ul>
+            
+                  <div style="
+                  margin-top:36px;
+                  padding-top:24px;
+                  border-top:1px solid rgba(87, 13, 13, 0.12);
+                ">
+                  <a href="Images/attest2.pdf"
+                     target="_blank"
+                     class="btn-gradient">
+                    📄 Attestation (PDF)
+                  </a>
+                </div>            
+                </div>
+            
+              </div>
+            </div>
+            
+          </section>
+          <!-- REALISATIONS -->
+<section id="realisations" class="tab">
+  <h1>Mes Réalisations</h1>
+
+  <!-- Bannière -->
+  <div class="card banner-fade" style="margin-top:14px; padding:0; overflow:hidden; position:relative; grid-column:1 / -1">
+    <img src="Images/realisations.png" alt="Mes Réalisations"
+         style="width:100%; height:260px; object-fit:cover; display:block; filter:contrast(1.05) brightness(.92)">
+    <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.55))"></div>
+    <div style="position:absolute; left:20px; bottom:20px;">
+      <h2 style="margin:0 0 6px;">Créations & Projets BTS SIO</h2>
+      <p style="margin:0; color:var(--muted)">
+        Projets réalisés en formation, en stage et certifications obtenues.
+      </p>
+    </div>
+  </div>
+
+  <!-- ================= FORMATION ================= -->
+  <h2 style="margin-top:40px">🎓 Réalisations en formation</h2>
+  <p class="muted">Travaux pratiques et projets réalisés durant le BTS SIO SISR.</p>
+
+  <div class="grid g-3">
+
+    <div class="card">
+      <img src="Images/StreamFlixLogo.jpg" alt="Interface Netflix" style="width:100%; height:140px; object-fit:cover">
+      <h3>Interface type Netflix</h3>
+      <p>Reproduction d'une interface moderne en HTML/CSS/JS (responsive, carrousel).</p>
+      <a href="https://github.com/mldnbzn" target="_blank" class="btn">🔗 GitHub</a>
+    </div>
+
+    <div class="card">
+      <img src="Images/cisco.png" alt="Packet Tracer" style="width:100%; height:140px; object-fit:contain">
+      <h3>Maquette réseau – Packet Tracer</h3>
+      <p>VLAN, routage, DHCP et serveurs dans un réseau d'entreprise simulé.</p>
+      <a href="Document/01-introduction Packet Tracer.pdf" target="_blank" class="btn">🎓 TP</a>
+    </div>
+
+    <div class="card">
+      <img src="Images/ssl.webp" alt="SSL" style="width:100%; height:140px; object-fit:contain">
+      <h3>Mise en œuvre SSL</h3>
+      <p>Sécurisation des échanges HTTPS sur Apache avec certificat SSL.</p>
+      <a href="Document/B3 - Mise en oeuvre de SSL.pdf" target="_blank" class="btn">🎓 TP</a>
+    </div>
+
+    <div class="card">
+      <img src="Images/apache.jpg" alt="Apache" style="width:100%; height:140px; object-fit:contain">
+      <h3>Serveur Web Apache</h3>
+      <p>Hébergement d'un site PHP/MySQL avec virtual host sous Debian.</p>
+      <a href="Document/05- TD Apache2.pdf" target="_blank" class="btn">🎓 TP</a>
+    </div>
+
+    <div class="card">
+      <img src="Images/addns.png" alt="Active Directory" style="width:100%; height:140px; object-fit:contain">
+      <h3>Active Directory & DNS</h3>
+      <p>Déploiement d'un domaine Windows Server et gestion centralisée.</p>
+    </div>
+
+  </div>
+
+  <!-- ================= STAGE ================= -->
+  <h2 style="margin-top:50px">🏢 Réalisations en stage</h2>
+  <p class="muted">Missions réalisées en environnement professionnel.</p>
+
+  <div class="grid g-3">
+
+    <div class="card">
+      <img src="Images/xefii.jpg" alt="XEFI" style="width:100%; height:140px; object-fit:contain">
+      <h3>Gestion de tickets d'incidents</h3>
+      <p>Création, suivi et résolution de tickets clients chez XEFI.</p>
+      <a href="https://ticket.xefi.fr/" target="_blank" class="btn">🔗 Portail XEFI</a>
+    </div>
+
+    <div class="card">
+      <img src="Images/sophos.webp" alt="Sophos" style="width:100%; height:140px; object-fit:contain">
+      <h3>Configuration de pare-feu</h3>
+      <p>Mise en place de règles de sécurité via Sophos Central.</p>
+      <a href="https://www.sophos.com/fr-fr" target="_blank" class="btn">🔗 Sophos</a>
+    </div>
+
+    <div class="card">
+      <img src="Images/win11.webp" alt="Windows 11" style="width:100%; height:140px; object-fit:contain">
+      <h3>Reformatage Windows 11</h3>
+      <p>Installation complète, paramétrage réseau et mises à jour.</p>
+      <a href="https://www.microsoft.com/fr-fr/software-download/windows11" target="_blank" class="btn">🔗 Windows 11</a>
+    </div>
+
+    <div class="card">
+      <img src="Images/office.jpg" alt="Office" style="width:100%; height:140px; object-fit:cover">
+      <h3>Installation de logiciels</h3>
+      <p>Installation et configuration d'outils bureautiques et métiers.</p>
+      <a href="https://setup.office.com/" target="_blank" class="btn">🔗 Pack Office</a>
+    </div>
+
+    <div class="card">
+      <img src="Images/infogerence.jpg" alt="Infogérance" style="width:100%; height:140px; object-fit:cover">
+      <h3>Interventions d'infogérance</h3>
+      <p>Dépannage postes, logiciels et réseau en entreprise.</p>
+    </div>
+
+  </div>
+
+  <!-- ================= CERTIFICATIONS ================= -->
+  <h2 style="margin-top:50px">🏅 Certifications</h2>
+  <p class="muted">Certifications validant mes compétences numériques et cybersécurité.</p>
+
+  <div class="grid g-3">
+
+    <div class="card">
+      <img src="Images/logo_secnum.png" alt="SecNumAcadémie"
+           style="width:100%; height:140px; object-fit:contain; background:#fff; padding:12px">
+      <h3>SecNumAcadémie – ANSSI</h3>
+      <p>Fondamentaux de la cybersécurité : authentification, sécurité web.</p>
+      <a href="Images/Secnum.pdf" target="_blank" class="btn">📄 Certification</a>
+    </div>
+
+    <div class="card">
+      <img src="Images/pix.svg" alt="PIX" style="width:100%; height:140px; object-fit:contain">
+      <h3>Certification PIX</h3>
+      <p>Validation des compétences numériques essentielles.</p>
+      <a href="Images/certification-pix-20240314.pdf" target="_blank" class="btn">📄 Certification</a>
+    </div>
+
+  </div>
+</section>
+
+       <!-- EPREUVES E5 -->
+<section id="epreuves" class="tab">
+  <h1>Épreuve E5 — BTS SIO</h1>
+
+  <!-- BANNIÈRE -->
+  <div class="card banner-fade"
+       style="margin-top:14px; padding:0; overflow:hidden; position:relative; grid-column:1 / -1">
+    <img src="Images/real.png"
+         alt="BTS SIO Épreuves"
+         style="width:100%; height:260px; object-fit:cover; display:block; filter:contrast(1.05) brightness(.9)">
+    <div style="position:absolute; inset:0;
+                background:linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.6))">
+    </div>
+    <div style="position:absolute; left:20px; bottom:20px;">
+      <h2 style="margin:0 0 6px;">Épreuve E5 — Présentation du Portfolio</h2>
+      <p style="margin:0; color:var(--muted)">
+        Présentation des compétences professionnelles acquises à travers des situations réelles
+      </p>
+    </div>
+  </div>
+
+  <!-- CONTENU PRINCIPAL -->
+  <div class="grid g-3" style="margin-top:20px">
+    <div class="card" style="grid-column:1 / -1">
+
+      <h2>📋 Présentation de l'épreuve E5</h2>
+
+      <p>
+        L'épreuve <strong>E5</strong> du BTS SIO est une <strong>épreuve orale</strong> basée sur la 
+        présentation du <strong>portfolio de compétences</strong> construit tout au long de la formation.
+      </p>
+
+      <p>
+        Elle permet au candidat de <strong>démontrer les compétences professionnelles</strong> acquises
+        à travers des <strong>situations réelles</strong>, issues des stages et des travaux pratiques.
+      </p>
+
+      <h3>🎯 Objectifs de l'épreuve</h3>
+      <ul>
+        <li>Présenter les compétences acquises en BTS SIO</li>
+        <li>Illustrer ces compétences par des situations professionnelles</li>
+        <li>Justifier les choix techniques réalisés</li>
+        <li>Démontrer sa capacité à assurer le support informatique</li>
+      </ul>
+
+      <h3>💼 Situations professionnelles présentées</h3>
+      <p>
+        Les situations présentées à l'épreuve E5 s'appuient principalement sur 
+        <strong>mes stages réalisés</strong> ainsi que sur les 
+        <strong>travaux pratiques réalisés en BTS SIO SISR</strong>.
+      </p>
+
+      <ul>
+        <li>Gestion des incidents et demandes utilisateurs via GLPI</li>
+        <li>Support et maintenance des postes informatiques</li>
+        <li>Interventions sur site et assistance à distance</li>
+        <li>Participation à l'administration systèmes et réseaux</li>
+        <li>Documentation et suivi des interventions</li>
+      </ul>
+
+      <h3>📅 Déroulement de l'épreuve</h3>
+      <p>
+        L'épreuve E5 se déroule sous la forme d'un <strong>oral de 45 minutes</strong> devant un jury.
+      </p>
+      <p>
+        Le candidat présente son portfolio, explique ses réalisations et répond aux questions 
+        du jury afin de démontrer sa <strong>maîtrise technique</strong> et sa 
+        <strong>posture professionnelle</strong>.
+      </p>
+
+      <div class="card" style="margin-top:18px;">
+        <h3 style="margin-bottom:14px;">📊 Tableau de synthèse E5</h3>
+      
+        <!-- APERÇU IMAGE GRAND FORMAT -->
+        <div style="
+          position: relative;
+          border-radius: 16px;
+          overflow: hidden;
+          border: 1px solid rgba(255,255,255,0.14);
+          background: rgba(0,0,0,0.35);
+        ">
+          <img
+            src="Images/tableau.PNG"
+            alt="Tableau de synthèse E5 — BTS SIO"
+            style="
+              width:100%;
+              height:520px;
+              object-fit:cover;
+              display:block;
+            "
+          />
+      
+          <!-- OVERLAY FONDU -->
+          <div style="
+            position:absolute;
+            inset:0;
+            background:linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.45));
+            pointer-events:none;
+          "></div>
+      
+          <!-- BOUTON -->
+          <div style="
+            position:absolute;
+            bottom:18px;
+            right:18px;
+          ">
+            <a
+              href="Document/Tableau de synthese.pdf"
+              target="_blank"
+              class="btn btn-primary">
+              🔍 Ouvrir en grand
+            </a>
+          </div>
+        </div>
+      
+        <p style="margin-top:12px; color:var(--muted); text-align:center;">
+          Aperçu du tableau de synthèse des compétences — BTS SIO E5
+        </p>
+      </div>
+
+      <div style="margin-top:20px;">
+        <a href="#realisations"
+           class="btn"
+           onclick="showTab('realisations'); return false;">
+          🔗 Voir mes réalisations
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+         <!-- EPREUVE E6 -->
+<section id="epreuve-e6" class="tab">
+   <!-- BANNIÈRE -->
+   <div class="card banner-fade"
+   style="margin-top:14px; padding:0; overflow:hidden; position:relative; grid-column:1 / -1">
+<img src="Images/esix.png"
+     alt="BTS SIO Épreuves"
+     style="width:100%; height:260px; object-fit:cover; display:block; filter:contrast(1.05) brightness(.9)">
+<div style="position:absolute; inset:0;
+            background:linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.6))">
+</div>
+<div style="position:absolute; left:20px; bottom:20px;">
+  <h2 style="margin:0 0 6px;">Les Épreuves Professionnelles du BTS SIO</h2>
+  <p style="margin:0; color:var(--muted)">
+    Présentation de l'épreuve E6.
+  </p>
+</div>
+</div>
+
+  <!-- INTRO -->
+  <div class="card" style="margin-top:16px">
+    <p>
+      L'épreuve <strong>E6</strong> du <strong>BTS SIO option SISR</strong>
+      est une épreuve <strong>pratique et orale</strong> visant à évaluer
+      la capacité du candidat à <strong>administrer</strong>,
+      <strong>sécuriser</strong> et <strong>exploiter</strong>
+      une infrastructure informatique dans un
+      <strong>contexte professionnel</strong>.
+    </p>
+
+    <p>
+      Elle s'appuie sur des <strong>situations professionnelles préparées</strong>
+      et sur une <strong>mise en situation technique</strong> devant le jury.
+    </p>
+  </div>
+
+  <!-- OBJECTIFS -->
+  <div class="card" style="margin-top:18px">
+    <h2>🎯 Objectifs de l'épreuve</h2>
+
+    <ul>
+      <li>Analyser une problématique liée aux <strong>systèmes et réseaux</strong></li>
+      <li>Mettre en œuvre une <strong>solution technique adaptée</strong></li>
+      <li>Administrer et <strong>sécuriser une infrastructure</strong></li>
+      <li>Tester et <strong>valider le bon fonctionnement</strong></li>
+      <li>Adopter une <strong>posture professionnelle</strong> face au jury</li>
+    </ul>
+  </div>
+
+  <!-- DEROULEMENT -->
+  <div class="card" style="margin-top:18px">
+    <h2>🧩 Déroulement</h2>
+
+    <p>
+      L'épreuve se déroule en deux temps :
+    </p>
+
+    <ul>
+      <li><strong>Analyse</strong> de la problématique proposée</li>
+      <li><strong>Présentation</strong> de la démarche au jury</li>
+      <li><strong>Réalisation</strong> de la solution dans un temps limité</li>
+      <li><strong>Justification</strong> des choix techniques à l'oral</li>
+    </ul>
+  </div>
+
+  <!-- COMPETENCES -->
+  <div class="card" style="margin-top:18px">
+    <h2>💡 Compétences évaluées</h2>
+
+    <div class="grid g-3" style="margin-top:10px">
+      <div>
+        <h3>🔧 Techniques</h3>
+        <ul>
+          <li>Systèmes Windows et Linux</li>
+          <li>Services et réseaux</li>
+          <li>Sécurité des infrastructures</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>🧠 Analyse</h3>
+        <ul>
+          <li>Compréhension du besoin</li>
+          <li>Choix de solutions adaptées</li>
+          <li>Résolution de problèmes</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>🗣️ Communication</h3>
+        <ul>
+          <li>Explication claire</li>
+          <li>Argumentation technique</li>
+          <li>Documentation professionnelle</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SITUATIONS -->
+  <div class="card" style="margin-top:18px">
+    <h2>💼 Situations professionnelles préparées</h2>
+
+    <p>
+      Les situations professionnelles présentées à l'épreuve E6 sont issues
+      de mes <strong>stages</strong> et de mes
+      <strong>travaux pratiques en BTS SIO SISR</strong>.
+    </p>
+
+    <ul>
+      <li>Administration et sécurisation de systèmes</li>
+      <li>Configuration d'équipements réseaux</li>
+      <li>Mise en place de services informatiques</li>
+      <li>Maintenance et supervision d'environnements</li>
+    </ul>
+  </div>
+
+  <!-- LIEN -->
+  <div style="margin-top:20px; text-align:center">
+    <a href="#realisations"
+       class="btn btn-primary"
+       onclick="showTab('realisations'); return false;">
+      🛠️ Voir mes projets liés à l'épreuve E6
+    </a>
+  </div>
+</section>
+
+
+          <!-- ===== VEILLE TECHNOLOGIQUE ===== -->
+<section id="veille" class="tab">
+  <h1>Veille Technologique</h1>
+
+  <!-- INTRO -->
+  <div class="card">
+    <h2>Qu'est-ce que la veille technologique ?</h2>
+    <p>
+      La veille technologique consiste à surveiller les <strong>évolutions techniques</strong>
+      et les <strong>menaces émergentes</strong> afin d'anticiper les risques et
+      d'adapter les pratiques professionnelles.
+      Dans le cadre du <strong>BTS SIO option SISR</strong>,
+      elle permet de rester informé sur la <strong>sécurité des systèmes</strong>
+      et des <strong>postes utilisateurs</strong>.
+    </p>
+  </div>
+
+  <!-- OUTILS -->
+  <div class="card">
+    <h2>🧰 Outils utilisés pour ma veille</h2>
+    <ul>
+      <li><strong>Feedly</strong> : agrégation de flux RSS spécialisés en cybersécurité</li>
+      <li><strong>Cybermalveillance.gouv.fr</strong> : alertes et recommandations officielles</li>
+      <li><strong>Le Monde Informatique</strong> et <strong>ZDNet</strong> : actualités professionnelles</li>
+    </ul>
+  </div>
+
+  <!-- SUJET -->
+  <div class="card highlight">
+    <h2>💡 Sujet de ma veille</h2>
+    <p>
+      <strong>« L'évolution des menaces de cybersécurité sur les postes utilisateurs »</strong><br>
+      Problématique :
+      <em>Pourquoi les postes utilisateurs sont-ils devenus la principale cible des cyberattaques ?</em>
+    </p>
+  </div>
+
+  <!-- THEME 1 -->
+  <div class="card theme">
+    <h2>🧠 Thème 1 : Les principales menaces actuelles</h2>
+    <p>
+      Les postes utilisateurs sont aujourd'hui exposés à des menaces
+      de plus en plus fréquentes, principalement à cause
+      des erreurs humaines et du phishing.
+    </p>
+    <ul>
+      <li>
+        <a href="https://www.cybermalveillance.gouv.fr/tous-nos-contenus/actualites/rapport-activite-2024"
+           target="_blank">
+          Phishing : une menace toujours en hausse – Cybermalveillance.gouv.fr (2024)
+        </a>
+        <p>Analyse de l'augmentation des attaques par e-mail frauduleux.</p>
+      </li>
+      <li>
+        <a href="https://www.zdnet.fr/pratique/securite-les-employes-napprennent-pratiquement-rien-de-la-formation-au-phishing-et-voici-pourquoi-484814.htm"
+           target="_blank">
+          Le phishing, première menace cyber – ZDNet (2024)
+        </a>
+        <p>Article montrant que le poste utilisateur reste la première porte d'entrée.</p>
+      </li>
+    </ul>
+  </div>
+
+  <!-- THEME 2 -->
+  <div class="card theme">
+    <h2>💣 Thème 2 : Conséquences pour les entreprises</h2>
+    <p>
+      Une attaque réussie sur un poste utilisateur peut entraîner
+      des conséquences graves pour l'entreprise :
+      perte de données, arrêt d'activité ou impact financier.
+    </p>
+    <ul>
+      <li>
+        <a href="https://www.lemagit.fr/actualites/366633431/Le-ransomware-Ca-payait-mieux-avant"
+           target="_blank">
+          Les entreprises toujours plus touchées par les ransomwares – LeMagIT (2024)
+        </a>
+        <p>Retour sur l'impact économique et organisationnel des cyberattaques.</p>
+      </li>
+      <li>
+        <a href="https://www.lemondeinformatique.fr/actualites/lire-les-cyberattaques-coutent-cher-aux-entreprises-92774.html"
+           target="_blank">
+          Le coût des cyberattaques pour les entreprises – Le Monde Informatique (2024)
+        </a>
+        <p>Étude sur les coûts directs et indirects liés aux incidents de sécurité.</p>
+      </li>
+    </ul>
+  </div>
+
+  <!-- THEME 3 -->
+  <div class="card theme">
+    <h2>🛡️ Thème 3 : Les solutions de protection mises en place</h2>
+    <p>
+      Pour limiter les risques, les entreprises mettent en place
+      des solutions techniques et humaines
+      afin de sécuriser les postes utilisateurs.
+    </p>
+    <ul>
+      <li>
+        <a href="https://www.cybermalveillance.gouv.fr/bonnes-pratiques"
+           target="_blank">
+          Bonnes pratiques pour sécuriser les postes de travail – Cybermalveillance.gouv.fr (2024)
+        </a>
+        <p>Guide officiel sur les mesures de protection essentielles.</p>
+      </li>
+      <li>
+        <a href="https://www.zdnet.fr/actualites/comment-securiser-le-poste-de-travail-a-l-ere-du-travail-hybride-39964800.htm"
+           target="_blank">
+          Comment sécuriser efficacement un poste utilisateur – ZDNet (2024)
+        </a>
+        <p>Présentation des outils et bonnes pratiques en entreprise.</p>
+      </li>
+    </ul>
+  </div>
+
+  <!-- CONCLUSION -->
+  <div class="card conclusion">
+    <h2>📌 Conclusion</h2>
+    <p>
+      Cette veille montre que le <strong>poste utilisateur</strong>
+      reste le maillon faible de la cybersécurité.
+      Les stages réalisés m'ont permis d'observer concrètement
+      l'importance de la <strong>prévention</strong>,
+      de la <strong>sensibilisation</strong>
+      et de la <strong>sécurisation des postes</strong>
+      en environnement professionnel.
+    </p>
+  </div>
+</section>
+
+          <!-- CERTIFICATIONS -->
+          <!-- Certifications supprimées -->
+          <!-- CONTACT -->
+          <!-- CONTACT -->
+          <section id="contact" class="tab">
+            <h1>Contact</h1>
+            <div class="card" style=" margin-top:12px; padding:25px; border-radius:20px; box-shadow:0 8px 25px rgba(0,0,0,0.15); backdrop-filter: blur(6px); border:1px solid rgba(255,255,255,0.08) ">
+              <form onsubmit="event.preventDefault(); alert('Message envoyé ✔ (simulation)');" style="display:grid; gap:18px;">
+                <div class="grid g-2" style="gap:18px">
+                  <div>
+                    <label style="font-weight:600;">Nom</label>
+                    <input class="field" required placeholder="Votre nom" style="padding:14px; border-radius:12px; border:1px solid var(--border); transition:.3s; background:rgba(255,255,255,0.05);">
+                  </div>
+                  <div>
+                    <label style="font-weight:600;">Email</label>
+                    <input class="field" type="email" required placeholder="vous@exemple.com" style="padding:14px; border-radius:12px; border:1px solid var(--border); transition:.3s; background:rgba(255,255,255,0.05);">
+                  </div>
+                </div>
+                <div>
+                  <label style="font-weight:600;">Message</label>
+                  <textarea class="field" rows="5" required placeholder="Votre message..." style="padding:14px; border-radius:12px; border:1px solid var(--border); resize:none; transition:.3s; background:rgba(255,255,255,0.05);"></textarea>
+                </div>
+                <button class="btn" style=" margin-top:12px; padding:14px 22px; font-size:1.1rem; font-weight:700; border-radius:14px; background:linear-gradient(90deg, var(--primary), var(--primary-2)); box-shadow:0 6px 18px rgba(59,130,246,0.35); transition:transform .2s, box-shadow .2s; " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 22px rgba(59,130,246,0.5)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 6px 18px rgba(59,130,246,0.35)';"> 🚀 Envoyer </button>
+              </form>
+            </div>
+            <div class="card map-dark" style="margin-top:40px; padding:0; overflow:hidden; border-radius:20px;">
+              <iframe
+                src="https://www.google.com/maps?q=3%20impasse%20du%20Midi%20Saint-Chamond&output=embed"
+                width="100%"
+                height="320"
+                style="border:0;"
+                loading="lazy">
+              </iframe>
+            </div>
+            <p style="margin-top:25px; text-align:center; color:var(--text-muted);">
+              📍 Localisation : Saint-Chamond (Loire – 42)
+            </p>
+          </section>
+          <footer>
+            <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap">
+              <span>© <span id="year2"></span> — Bouziani Meldine · Portfolio BTS SIO </span>
+              <span style="color:var(--muted)"></span>
+            </div>
+          </footer>
+        </div>
+      </main>
+      <div class="scrim" id="scrim"></div>
+    </div>
+    <style>
+
+/* ================================
+   PROFIL — ANIMATIONS PREMIUM
+   ================================ */
+
+/* HERO : zoom lent + texte fluide */
+#profil .card > div:first-child img {
+  animation: heroZoom 16s ease-in-out infinite alternate;
+}
+
+@keyframes heroZoom {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+
+#profil .card > div:first-child h2,
+#profil .card > div:first-child p,
+#profil .card > div:first-child a {
+  opacity: 0;
+  animation: heroText .9s ease forwards;
+}
+
+#profil .card > div:first-child h2 { animation-delay: .2s; }
+#profil .card > div:first-child p  { animation-delay: .4s; }
+#profil .card > div:first-child a  { animation-delay: .6s; }
+
+@keyframes heroText {
+  from { opacity:0; transform: translateY(18px); }
+  to   { opacity:1; transform:none; }
+}
+
+/* CARDS : lévitation premium */
+#profil .card {
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
+#profil .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 45px rgba(0,0,0,.45);
+}
+
+/* TITRES : underline animé */
+#profil h2 {
+  position: relative;
+  display: inline-block;
+}
+
+#profil h2::after {
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:100%;
+  height:3px;
+  background:linear-gradient(90deg,var(--primary),var(--primary-2));
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .4s ease;
+}
+
+#profil h2:hover::after {
+  transform:scaleX(1);
+}
+
+/* TAGS : punch subtil */
+#profil .tag {
+  transition: transform .25s ease, background .25s ease;
+}
+
+#profil .tag:hover {
+  transform: translateY(-3px) scale(1.05);
+  background:linear-gradient(90deg,var(--primary),var(--primary-2));
+  color:#fff;
+}
+
+/* APPARITION AU SCROLL */
+#profil .reveal {
+  opacity:0;
+  transform: translateY(26px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+
+#profil .reveal.show {
+  opacity:1;
+  transform:none;
+}
+
+
+
+
+
+
+
+
+#veille .card {
+  animation: fadeInUp 0.7s ease both;
+}
+
+#veille .theme {
+  border-left: 4px solid var(--primary);
+}
+
+#veille .highlight {
+  background: linear-gradient(90deg, rgba(36, 131, 56, 0.15), rgba(22, 71, 35, 0.15));
+}
+
+#veille .conclusion {
+  background: rgba(27, 145, 53, 0.08);
+}
+
+
+
+
+/* Bouton gradient premium (attestation, actions importantes) */
+.btn-gradient {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+
+  background: linear-gradient(90deg, #1a6927, #246b3a);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255,255,255,0.15);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 28px rgba(38, 82, 34, 0.55),
+    inset 0 0 0 1px rgba(255,255,255,0.25);
+}
+
+
+
+
+
+/* Bouton principal (CV, contact, actions) */
+.btn-primary {
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 6px 18px rgba(44, 175, 62, 0.35);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(44, 167, 60, 0.55);
+}
+
+
+
+#profil a {
+  color: var(--text);
+  text-decoration: none;
+  position: relative;
+}
+
+#profil a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: var(--primary-2);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+#profil a:hover::after {
+  transform: scaleX(1);
+}
+
+#profil a:hover {
+  color: var(--primary-2);
+}
+
+
+      /* Small helpers (kept at bottom) */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        padding: .6rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+        color: var(--text)
+      }
+
+      label {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--muted)
+      }
+
+      .field {
+        width: 100%;
+        padding: .7rem .8rem;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: rgba(0, 2, 1, 0.06);
+        color: var(--text)
+      }
+
+      ul {
+        margin: .4rem 0 .4rem 1.1rem
+      }
+
+      /* ==== ANIMATIONS POUR LA PAGE VEILLE ==== */
+      /* Apparition douce des cartes */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Animation de fade-in globale */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Effet d'apparition pour chaque card */
+      #veille .card {
+        animation: fadeInUp 0.8s ease both;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      /* Effet au survol des cartes */
+      #veille .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 25px rgba(25, 77, 21, 0.3);
+      }
+
+      /* Animation du titre principal */
+      #veille h1 {
+        animation: fadeIn 1s ease both;
+        text-align: center;
+        font-size: 2rem;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-2));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* Animation douce sur les liens */
+      #veille a {
+        position: relative;
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      #veille a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -3px;
+        width: 100%;
+        height: 2px;
+        background: var(--primary);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+        transform-origin: left;
+      }
+
+      #veille a:hover::after {
+        transform: scaleX(1);
+      }
+
+      #veille a:hover {
+        color: var(--primary-2);
+      }
+    </style>
+    <script>
+// ==========================
+//        SIMPLE TABS
+// ==========================
+
+// Sélecteurs
+const links = Array.from(document.querySelectorAll('[data-tab-target]'));
+const sections = Array.from(document.querySelectorAll('section.tab'));
+const byId = id => document.getElementById(id);
+
+// Fonction d'affichage des onglets
+function showTab(id, pushHash = true) {
+
+  // Activer la bonne section
+  sections.forEach(s => s.classList.toggle('active', s.id === id));
+
+  // Activer le bon bouton du menu
+  links.forEach(l =>
+    l.classList.toggle('active', l.getAttribute('data-tab-target') === id)
+  );
+
+  // Sauvegarder l'onglet actif
+  localStorage.setItem('activeTab', id);
+
+  // Mettre à jour l'URL (hash)
+  if (pushHash) {
+    history.replaceState(null, '', '#' + id);
+  }
+
+  // Fermer la sidebar mobile
+  closeNav();
+
+  // Scroll en haut
+  document.querySelector('main').scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Clic sur les onglets
+links.forEach(l =>
+  l.addEventListener('click', (e) => {
+    e.preventDefault();
+    showTab(l.getAttribute('data-tab-target'));
+  })
+);
+
+// Onglet de démarrage : hash > localStorage > profil
+const init = (location.hash || '').replace('#', '') ||
+             localStorage.getItem('activeTab') ||
+             'profil';
+
+if (byId(init)) showTab(init, false);
+else showTab('profil', false);
+
+// ==========================
+//         YEAR FOOTER
+// ==========================
+const y = new Date().getFullYear();
+document.getElementById('year').textContent = y;
+document.getElementById('year2').textContent = y;
+
+// ==========================
+//     SIDEBAR MOBILE
+// ==========================
+const sidebar = document.getElementById('sidebar');
+const scrim = document.getElementById('scrim');
+const openBtn = document.getElementById('openNav');
+const mq = window.matchMedia('(max-width: 860px)');
+
+function openNav() {
+  if (mq.matches) {
+    sidebar.classList.add('open');
+    scrim.classList.add('show');
+  }
+}
+
+function closeNav() {
+  sidebar.classList.remove('open');
+  scrim.classList.remove('show');
+}
+
+if (openBtn) openBtn.addEventListener('click', openNav);
+scrim.addEventListener('click', closeNav);
+
+// ==========================
+//     REVEAL ANIMATIONS
+// ==========================
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('show');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+// Observer toutes les cards et titres
+document.querySelectorAll('.card, h1, h2, h3').forEach(el => {
+  el.classList.add('reveal');
+  observer.observe(el);
+});
+</script>
+
+  </body>
+</html>
